@@ -1,0 +1,19 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+	<h1>Author : {{ author }}</h1>
+	<p>Date of birth : {{ author.date_of_birth }}</p>
+	<p>Date of died : {% if author.date_of_death %} {{ author.date_of_death }} {% else %} N.A {% endif %}</p>
+<h3>Books : </h3>
+	{% if author.book_set.all %}
+		{% for single_book in author.book_set.all %}
+			<li>
+				<a href="{{ single_book.get_absolute_url }}">{{ single_book.title }} ( {{ single_book.bookinstance_set.count }} )</a>
+				<p> {{ single_book.summary }} </p>
+			</li>
+		{% endfor %}
+	{% else %}
+		<div class="alert alert-danger">Sorry no books found for this author.</div>
+	{% endif %}	
+
+{% endblock %}
